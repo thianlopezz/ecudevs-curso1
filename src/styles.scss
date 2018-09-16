@@ -1,0 +1,7 @@
+// SOBREESCRIBIMOS LAS VARIABLES DE COLORES QUE NOS DA BOOTSTRAP POR DEFECTO
+$theme-colors: (
+  "primary": #377a87,
+  "secondary": #fc5d64
+);
+
+@import "node_modules/bootstrap/scss/bootstrap";
