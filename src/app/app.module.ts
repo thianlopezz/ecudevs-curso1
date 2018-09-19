@@ -12,6 +12,9 @@ import { HeaderComponent } from './comun/header/header.component';
 import { HomeComponent } from './home/home.component';
 
 import { routing } from './routes/app.routes';
+import { ToDoListComponent } from './to-do/to-do-list/to-do-list.component';
+import { ToDoFormComponent } from './to-do/to-do-form/to-do-form.component';
+import { HttpModule } from '@angular/http';
 
 // EN *DECLARATIONS* SE REFERENCIAN
 // COMPONENTES, DIRECTIVAS
@@ -30,12 +33,15 @@ import { routing } from './routes/app.routes';
     NumeroDirective,
     UpperDirective,
     HeaderComponent,
-    HomeComponent
+    HomeComponent,
+    ToDoListComponent,
+    ToDoFormComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     RouterModule,
+    HttpModule,
     routing
   ],
   providers: [],

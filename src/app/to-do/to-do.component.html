@@ -1,50 +1,7 @@
 <div class="container">
-  <!-- LA DIRECTIVA NGFORM VA A ITERAR EL ELEMENTO DIV CON LOS N ELEMENTOS QUE TIENE toDos QUE DEFINIMOS EN EL CONTROLADOR -->
-  <!-- INDEX NOS INDICA LA ITERACION DE NEUSTRO ELEMENTO LA PRIMERA ITERACION VA A TENER 0, LA SEGUNDA 1 Y ASI SUCESIVAMENTE-->
-  <div class="row my-4 text-center border-bottom border-secondary" *ngFor="let todo of toDos; let i = index;">
-    <!-- NGCLASS AGREGA LA CLASE 'text-success' CUANDO todo.feRealizado tenga valor -->
-    <div class="col md-8" [ngClass]="{'text-success':todo.feRealizado}">
-      <p>{{(i+1) +' '+ todo.descripcion}}</p>
-    </div>
-    <div class="col md-1" [ngClass]="{'text-success':todo.feRealizado}">
-      <p>{{todo.hora}}</p>
-    </div>
-    <div class="col md-1" [ngClass]="{'text-success':todo.feRealizado}">
-      <!-- ESTE PIPE DEFINE UN FORMATO DE HORA PARA MOSTRAR EN LA VISTA -->
-      <p>{{todo.feRealizado | date:'dd/MM/yyyy HH:mm'}}</p>
-    </div>
-    <!-- LA DIRECTIVA NGIF RENDERIZA EL COMPONENTE EN CASO DE QUE NUESTRA CONDICION SE TRUE -->
-    <!-- OCULTAMOS EL BOTON CUANDO LA TAREA ESTE REALIZADA -->
-    <div class="col-md-2" *ngIf="!todo.feRealizado">
-      <!-- EVENTO CLICK PARA REALIZAR SETEAR NUESTRA FECHA DE REALIZACION DE TAREA -->
-      <a class="mx-2" (click)="realizado(i)">
-        <i class="fas fa-check"></i>
-      </a>
-      <!-- EVENTO CLICK PARA REALIZAR LA ELIMINACION DEL ELEMENTO EN NUESTRO ARREGLO -->
-      <a class="mx-2" (click)="eliminar(i)">
-        <i class="fas fa-times"></i>
-      </a>
-    </div>
-  </div>
+  <app-to-do-list [toDos]="toDos" (realizado)="realizado($event)" (eliminar)="eliminar($event)"></app-to-do-list>
   <!-- LA DIRECTIVA NGIF RENDERIZA EL COMPONENTE EN CASO DE QUE NUESTRA CONDICION SE TRUE -->
-  <div class="row text-center my-2" *ngIf="show">
-    <div class="col-md-9">
-      <!-- DE ESTA MANERA CONFIGURAMOS NUESTRO TWO-WAY-BINDING QUE SE ASIGNA A NUESTRO MODELO -->
-      <!-- PARA ESTE CASO VAMOS A TOMAR CONTROL DE EL CAMPO DESCRIPCION DE NUESTRO OBJETO MODEL -->
-      <input type="text" class="form-control" name="descripcion" [(ngModel)]="model.descripcion" #descripcion="ngModel" appUpper/>
-    </div>
-    <div class="col-md-1">
-      <!-- PARA ESTE CASO VAMOS A TOMAR CONTROL DE EL CAMPO HORA DE NUESTRO OBJETO MODEL -->
-      <input type="text" class="form-control" name="hora" [(ngModel)]="model.hora" #hora="ngModel" appNumero/>
-    </div>
-    <div class="col-md-2">
-      <!-- EVENTO CLICK PARA AGREGAR NUESTRO OBJETO -->
-      <button type="button" class="btn btn-outline-primary btn-block" (click)="agregar()">
-        Guardar 
-        <i class="fas fa-check"></i>
-      </button>
-    </div>
-  </div>
+  <app-to-do-form *ngIf="show" (agregar)="agregar($event)"></app-to-do-form>
   <div class="row">
     <div class="col-md-12">
       <!-- EVENTO CLICK PARA MOSTRAR EL PEQUENO FORMULARIO -->

@@ -10,9 +10,6 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ToDoComponent implements OnInit {
 
-  // COMENZAMOS DIFINIENDO NUESTRO MODELO TIPO ToDoItem
-  model: ToDoItem = { descripcion: '', hora: 0 };
-
   // SETEAMOS NUESTRO ARREGLO
   // ESTE ARREGLO VA A CONTENER LA INFORMACION
   // QUE SERA MAPEADA EN NUESTRA VISTA
@@ -54,22 +51,32 @@ export class ToDoComponent implements OnInit {
   getToDos() {
 
     // LLAMAMOS AL METODO DE NUESTRO SERVICE QUE NOS DEVUELVE TODOS LOS TODOS
-    this.toDos = this.todoService.get();
-    if (this.idTodo) {
-      // EN CASO DE QUE TENGAMOS UN PARAMETRO POR URL FILTRAMOS NUESTRO ARRAY
-      this.toDos = this.toDos.filter(x => x.id === this.idTodo);
-    }
+    this.todoService.get()
+      .subscribe(response => {
+        this.toDos = response;
+        if (this.idTodo) {
+          // EN CASO DE QUE TENGAMOS UN PARAMETRO POR URL FILTRAMOS NUESTRO ARRAY
+          this.toDos = this.toDos.filter(x => x.id === this.idTodo);
+        }
+      }, error => {
+        console.log(error);
+      });
   }
 
   // ESTE METODO VA A AGREGAR NUESTRO MODELO
   // A NUESTRO ARRAY toDos
-  agregar() {
+  agregar(model) {
+
+    this.todoService.insertar(model)
+      .subscribe(response => {
+        console.log(response);
+        this.getToDos();
+      }, error => {
+        console.log(error);
+      });
 
     // REALIZAMOS UN PUSH DE NUESTRO MODELO
-    this.toDos.push(this.model);
-
-    // LIMPIAMOS NUESTRO MODELO
-    this.model = { descripcion: '', hora: 0 };
+    this.toDos.push(model);
 
     // OCULTAMOS NUESTRO PEQUENO FORMULARIO
     this.show = false;
@@ -84,12 +91,21 @@ export class ToDoComponent implements OnInit {
   // ESTE METODO VA A BUSCAR UN ELEMENTO DE NUESTRO ARREGLO Y ASIGNARLE UNA FECHA
   // DICIENDO QUE HEMOS REALIZADO UNA TAREA
   realizado(i) {
-    this.toDos[i].feRealizado = new Date();
+    // tslint:disable-next-line:prefer-const
+    let model = this.toDos[i];
+    model.feRealizado = new Date();
+
+    this.todoService.actualizar(model)
+      .subscribe(response => {
+        console.log(response);
+        this.getToDos();
+      }, error => {
+        console.log(error);
+      });
   }
 
   // ESTE METODO VA A SACAR UN ELEMENTO DEL ARREGLO
   eliminar(i) {
-
     // EL PRIMER PARAMETRO DE SPLICE ES LA POSICION DEL OBJETO QUE VAMOS A SACAR DE NUESTRO ARREGLO
     // EL SEGUNDO PARAMETRO INDICA CUANTOS ELEMENTOS VAMOS A SACAR A PARTIR DEL i
     // EJ -> ['A', 'B', 'C', 'D'].splice(1,2) DA COMO RESULTADO ['A', 'D']

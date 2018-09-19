@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { map } from 'rxjs/operators';
 import { ToDoItem } from '../models/to-do-item';
 
 // LOS SERVICES SON CLASES QUE CONTIENEN OPERACIONES COMUNES
@@ -8,29 +10,22 @@ import { ToDoItem } from '../models/to-do-item';
 })
 export class TodoService {
 
-  constructor() { }
+  constructor(private http: Http) { }
 
   // EN ESTE METODO VAMOS A DEVOLVER UN ARREGLO DE OBJETOS TIPO ToDoItem
-  get(): Array<ToDoItem> {
+  get() {
 
-    return [
-      {
-        id: '1',
-        descripcion: 'Levantarse',
-        hora: 10,
-        feRealizado: new Date()
-      },
-      {
-        id: '2',
-        descripcion: 'Desayunar',
-        hora: 11,
-        feRealizado: new Date()
-      },
-      {
-        id: '3',
-        descripcion: 'Hacer deberes',
-        hora: 12
-      }
-    ];
+    return this.http.get('/api/todo/')
+      .pipe(map((response: Response) => response.json()));
+  }
+
+  insertar(model) {
+    return this.http.post('/api/todo/', model)
+      .pipe(map((response: Response) => response.json()));
+  }
+
+  actualizar(model) {
+    return this.http.put('/api/todo/', model)
+      .pipe(map((response: Response) => response.json()));
   }
 }
