@@ -1,4 +1,5 @@
-# ToDoApp
+# ToDoApp CURSO Ionic Framework y MEAN Stack - ECUDEVS
+EJECUTA EL COMANDO `ng serve` PARA CORRER EL PROYECTO
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
