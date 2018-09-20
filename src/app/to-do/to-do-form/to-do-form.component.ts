@@ -12,6 +12,7 @@ export class ToDoFormComponent implements OnInit {
   // COMENZAMOS DIFINIENDO NUESTRO MODELO TIPO ToDoItem
   model: ToDoItem = { descripcion: '', hora: 0 };
 
+  // Configuramos la informacion de salida de este componente con Output
   @Output() agregar = new EventEmitter<ToDoItem>();
 
   constructor() { }

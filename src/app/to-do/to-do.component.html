@@ -1,4 +1,9 @@
 <div class="container">
+  <!-- Con [toDos] definimos la entrada de datos a nuestro componente, recuerda -->
+  <!-- que el nombre dentro de los [] debe ser el mismo definido en el controlador de este objeto -->
+  <!-- De la misma manera debemos definir las acciones a tomar cuando halla una salida desde este componente -->
+  <!-- para eso definimos entre () y el mismo nombre de la salida configurada en nuestro componente -->
+  <!-- le pasamos el evento que queremos que se ejcute a la salida -->
   <app-to-do-list [toDos]="toDos" (realizado)="realizado($event)" (eliminar)="eliminar($event)"></app-to-do-list>
   <!-- LA DIRECTIVA NGIF RENDERIZA EL COMPONENTE EN CASO DE QUE NUESTRA CONDICION SE TRUE -->
   <app-to-do-form *ngIf="show" (agregar)="agregar($event)"></app-to-do-form>
